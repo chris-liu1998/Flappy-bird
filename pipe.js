@@ -1,43 +1,44 @@
 class Pipe {
-    constructor() {     //管道构造器
-        let spacing = 110;   //管道之间的空隙是固定的
-        this.top = random(height / 6, 3 / 4 * height);  //顶部管道高度
-        this.bottom = height - (this.top + spacing);   //底部管道高度（从上至下）
-        this.x = width;
-        this.w = 70;
-        this.speed = 3;
-        this.beenhit = false;     //判断鸟是否被撞到的  flag
+  constructor() {
+    let spacing = 125;   //上下管子之间的间隙
+    let centery = random(spacing, height - spacing);  //确定空隙的位置
+
+    this.top = centery - spacing / 2;   //管子的位置
+    this.bottom = height - (centery + spacing / 2);
+    this.x = width;   //从最右边开始移动
+    this.w = 80;
+    this.speed = 6;
+  }
+
+  // 检测鸟是否撞到柱子
+  hits(bird) {
+    if ((bird.y - bird.r) < this.top || (bird.y + bird.r) > (height - this.bottom)) {
+      if (bird.x > this.x && bird.x < this.x + this.w) {
+        return true;
+      }
     }
+    return false;
+  }
 
-    show() {   //显示
-        fill('green');
-        if (this.beenhit) {
-            fill(255, 0, 0);
+  // 画出管子
+  show() {
+    stroke(255);
+    fill('green');
+    rect(this.x, 0, this.w, this.top);
+    rect(this.x, height - this.bottom, this.w, this.bottom);
+  }
 
-        }
+  // 更新管子位置
+  update() {
+    this.x -= this.speed;
+  }
 
-        rect(this.x, 0, this.w, this.top);
-        rect(this.x, height - this.bottom, this.w, this.bottom);
+  // 判断管子是否移出屏幕
+  offscreen() {
+    if (this.x < -this.w) {
+      return true;
+    } else {
+      return false;
     }
-
-    update() {    //更新管道状态，这里是不断往左移动
-        this.x -= this.speed;
-    }
-    offscreen() {     //判断是否跑出左边的屏幕
-        if (this.x < -this.w) return true;
-        else return false;
-    }
-
-    hit(bird) {   //判断鸟是否撞到
-        if ((bird.y - 16) <= this.top || (bird.y + 16) >= (height - this.bottom)) {
-            if ((bird.x + 16) >= this.x && (bird.x - 16) <= (this.x + this.w)) {
-                this.beenhit = true;
-                return true;
-            }
-        }
-        this.beenhit = false;
-        return false;
-    }
-
-    
+  }
 }
