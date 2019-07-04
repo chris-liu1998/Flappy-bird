@@ -2,6 +2,8 @@
 let birds = [];    //存储一群鸟~
 let pipes = [];   //存储管道
 let count = -1;
+
+let counter = 0;
 const popultion = 300;  //种群数量
 function setup() {
     createCanvas(500, 500);

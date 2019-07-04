@@ -13,7 +13,7 @@ class Bird {
     show() {
         // ellipse(this.x, this.y, 16, 16);     //显示 方法
         stroke(200);
-        fill(0, 150);
+        fill(100 ,18,18, 150);
         ellipse(this.x, this.y, 32, 50);
     }
 
