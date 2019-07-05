@@ -48,11 +48,11 @@ function runTheBest() {
   runBest = !runBest;
   if (runBest) {
     resetGame();
-    runBestButton.html('continue training');
+    runBestButton.html('继续训练群体');
 
   } else {
     nextGeneration();
-    runBestButton.html('run best');
+    runBestButton.html('最优个体');
   }
 }
 
