@@ -1,5 +1,6 @@
 function resetGame() {
   counter = 0;
+  bgX = 0;
   // 重置分数
   if (bestBird) {
     bestBird.score = 0;

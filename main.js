@@ -4,15 +4,18 @@ let totalPopulation = 400; //总个体数
 let Birds = [];
 let currentBirds = [];
 let pipes = [];
-
+let parallax = 0.8;
 let counter = 0;
-
+let generation = 1;
+let bgspeed = 3;
 // 控制组件
 let speedSlider;
 let speedSpan;
 let highScoreSpan;
 let allTimeHighScoreSpan;
 let birdSprite;
+let bgImage;
+let bgX = 0;
 // 目前最高的分数，也代表目前最高适应度
 let highScore = 0;
 
@@ -21,6 +24,7 @@ let runBestButton;
 
 function preload() {
   birdSprite = loadImage('image/bird.png');
+  bgImage = loadImage('image/background.png');
 }
 
 function setup() {
@@ -48,21 +52,36 @@ function runTheBest() {
   runBest = !runBest;
   if (runBest) {
     resetGame();
-    runBestButton.html('continue training');
+    runBestButton.html('继续训练群体');
 
   } else {
     nextGeneration();
-    runBestButton.html('run best');
+    runBestButton.html('最优个体');
   }
 }
 
-function draw() {
-  background('Azure');
+function showGeneration() {
+  textSize(20);
+  fill('black');
+  text('Generation: ' + generation, width / 2 - 60, 30);
+}
 
+function draw() {
+  
+  background(0);
+  image(bgImage, bgX, 200, bgImage.width, height);
+  bgX -= bgspeed * parallax;
+  
+  if (bgX <= -1000 + width) {
+    image(bgImage, bgX + bgImage.width, 200, bgImage.width, height);
+    if (bgX <= -bgImage.width) {
+      bgX = 0;
+    }
+  }
+  
   // 加速与否？
   let cycles = speedSlider.value();
   speedSpan.html(cycles);
-
 
   // 加速的倍数
   for (let n = 0; n < cycles; n++) {
@@ -135,7 +154,7 @@ function draw() {
       bestBird = tempBestBird;
     }
   } else {
- 
+
     tempHighScore = bestBird.score;
     if (tempHighScore > highScore) {
       highScore = tempHighScore;
@@ -158,6 +177,8 @@ function draw() {
     }
     if (currentBirds.length == 0) {
       nextGeneration();
+      generation++;
     }
   }
+  showGeneration();
 }

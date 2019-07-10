@@ -2,15 +2,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <script language="javascript" type="text/javascript"src="p5.min.js"></script>
-  <script language="javascript" type="text/javascript"src="p5.dom.min.js"></script>
+  <script language="javascript" type="text/javascript" src="p5.min.js"></script>
+  <script language="javascript" type="text/javascript" src="p5.dom.min.js"></script>
   <script language="javascript" type="text/javascript" src="nn.js"></script>
   <script language="javascript" type="text/javascript" src="matrix.js"></script>
   <script language="javascript" type="text/javascript" src="main.js"></script>
   <script language="javascript" type="text/javascript" src="geneticAl.js"></script>
   <script language="javascript" type="text/javascript" src="bird.js"></script>
   <script language="javascript" type="text/javascript" src="pipe.js"></script>
-
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -19,15 +20,48 @@
     <br />
     <div id="container"></div>
     <p>
-      速度: <input id="speedSlider" type="range" min="1" max="10" value="1"> <span id="speed">1</span>
+      速度: <input id="speedSlider" type="range" min="0" max="10" value="1"> <span id="speed">1</span>
+      <br />
       <br /> 本代最高分数: <span id="hs">0</span>
+      <br />
       <br /> 历史最高分数: <span id="ahs">0</span>
     </p>
     <p>
-      <button id="best">查看最优个体</button>
+      <button id="best">最优个体</button>
     </p>
 
   </div>
 </body>
+<script>
+  //滑动时的样式
+  $.fn.RangeSlider = function (cfg) {
+    this.sliderCfg = {
+      min: cfg && !isNaN(parseFloat(cfg.min)) ? Number(cfg.min) : null,
+      max: cfg && !isNaN(parseFloat(cfg.max)) ? Number(cfg.max) : null,
+      step: cfg && Number(cfg.step) ? cfg.step : 1,
+      callback: cfg && cfg.callback ? cfg.callback : null
+    };
+
+    var $input = $(this);
+    var min = this.sliderCfg.min;
+    var max = this.sliderCfg.max;
+    var step = this.sliderCfg.step;
+    var callback = this.sliderCfg.callback;
+
+    $input.attr('min', min)
+      .attr('max', max)
+      .attr('step', step);
+
+    $input.bind("input", function (e) {
+      $input.attr('value', this.value);
+      $input.css('background', 'linear-gradient(to right, #059CFA, #ebeff4 ' + this.value * 10 + '%, #ebeff4)');
+
+      if ($.isFunction(callback)) {
+        callback(this);
+      }
+    });
+  };
+  $('#speedSlider').RangeSlider({ min: 0, max: 10, step: 1, callback: '' });//#snrPollInterval为input的id名
+</script>
 
 </html>
