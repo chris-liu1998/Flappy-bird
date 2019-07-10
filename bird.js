@@ -1,13 +1,3 @@
-function mutate(x) {  //产生变异
-  if (random(1) < 0.1) {
-    let offset = randomGaussian() * 0.5;
-    let newx = x + offset;
-    return newx;
-  } else {
-    return x;
-  }
-}
-
 class Bird {
   constructor(neuronet) {
     this.x = 64;
@@ -91,5 +81,14 @@ class Bird {
     this.velocity += this.gravity;
     this.y += this.velocity;
     this.score++;
+  }
+}
+function mutate(x) {  //产生变异
+  if (random(1) < 0.1) {
+    let offset = randomGaussian() * 0.5;
+    let newx = x + offset;
+    return newx;
+  } else {
+    return x;
   }
 }
